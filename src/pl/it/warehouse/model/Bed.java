@@ -15,4 +15,11 @@ public class Bed extends Product{
     public void setType(String type) {
         this.type = type;
     }
+
+    @Override
+    public String toString() {
+        return "Bed - " +
+                "type='" + type + '\'' +
+                ", " + super.toString();
+    }
 }

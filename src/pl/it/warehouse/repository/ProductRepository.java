@@ -1,5 +1,6 @@
 package pl.it.warehouse.repository;
 
+import org.w3c.dom.css.CSSUnknownRule;
 import pl.it.warehouse.model.Bed;
 import pl.it.warehouse.model.Product;
 import pl.it.warehouse.model.Table;
@@ -8,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ProductRepository {
-    List<Product> products = new ArrayList<>();
+    private List<Product> products = new ArrayList<>();
     private static final ProductRepository productRepository = new ProductRepository();
 
     private ProductRepository() {
@@ -20,7 +21,34 @@ public class ProductRepository {
         this.products.add(new Table("small", "Glas", "transparent", 23, "glass"));
     }
 
-    public static ProductRepository getInstance(){
+    public static ProductRepository getInstance() {
         return productRepository;
+    }
+
+    public List<Product> getAllProducts() {
+        return this.products;
+    }
+
+    public boolean deliverProductFromDB(String productName, int pieces) {
+        for (Product currentProduct : this.products) {
+            if (currentProduct.getName().equals(productName) && currentProduct.getPieces() >= pieces) {
+                currentProduct.setPieces(currentProduct.getPieces() - pieces);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public Product findProduct(String productName) {
+        for (Product currentProduct : this.products) {
+            if (currentProduct.getName().equals(productName)) {
+                return currentProduct;
+            }
+        }
+        return null;
+    }
+
+    public void addProductToDB(Product product) {
+        this.products.add(product);
     }
 }

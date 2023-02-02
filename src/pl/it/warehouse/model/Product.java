@@ -44,4 +44,12 @@ public class Product {
     public void setPieces(int pieces) {
         this.pieces = pieces;
     }
+
+    @Override
+    public String toString() {
+        return "size='" + size + '\'' +
+                ", name='" + name + '\'' +
+                ", color='" + color + '\'' +
+                ", pieces=" + pieces;
+    }
 }

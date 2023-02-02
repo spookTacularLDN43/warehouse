@@ -16,4 +16,11 @@ public class Table extends Product{
     public void setMaterial(String material) {
         this.material = material;
     }
+
+    @Override
+    public String toString() {
+        return "Table - " +
+                "material='" + material + '\'' +
+                ", " + super.toString();
+    }
 }
