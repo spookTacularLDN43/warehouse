@@ -65,10 +65,15 @@ public class GUI {
         String productName = scanner.nextLine();
         Product productFromDatabase = ProductRepository.getInstance().findProduct(productName);
         if (productFromDatabase != null) {
-            System.out.println("Enter number of pieces:");
-            int piecesToAdd = Integer.parseInt(scanner.nextLine());
-            productFromDatabase.setPieces(productFromDatabase.getPieces() + piecesToAdd);
-            System.out.println("Added!");
+            try {
+                System.out.println("Enter number of pieces:");
+                int piecesToAdd = Integer.parseInt(scanner.nextLine());
+                productFromDatabase.setPieces(productFromDatabase.getPieces() + piecesToAdd);
+                System.out.println("Added!");
+            } catch (NumberFormatException e) {
+                System.out.println("Incorrect number of pieces, try again!");
+                addProduct();
+            }
         } else {
             addNewProduct(productName);
         }
@@ -102,13 +107,18 @@ public class GUI {
     }
 
     private static DataWrapper readCommonData() {
-        System.out.println("Enter the size:");
-        String size = scanner.nextLine();
-        System.out.println("Enter the color:");
-        String color = scanner.nextLine();
-        System.out.println("Enter the pieces:");
-        int pieces = Integer.parseInt(scanner.nextLine());
-        return new DataWrapper(size, color, pieces);
+        try {
+            System.out.println("Enter the size:");
+            String size = scanner.nextLine();
+            System.out.println("Enter the color:");
+            String color = scanner.nextLine();
+            System.out.println("Enter the pieces:");
+            int pieces = Integer.parseInt(scanner.nextLine());
+            return new DataWrapper(size, color, pieces);
+        } catch (NumberFormatException e) {
+            System.out.println("Incorrect number of pieces, try again!");
+            return readCommonData();
+        }
     }
 
     static class DataWrapper {
